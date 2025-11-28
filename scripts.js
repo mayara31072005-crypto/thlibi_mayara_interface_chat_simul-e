@@ -122,3 +122,13 @@ function simulateResponse() {
         addMessageToDOM(currentResponse, 'Bob'); 
     }, delay);
 }
+messageForm.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    const messageText = messageInput.value.trim();
+    if (messageText !== '') {
+        addMessageToDOM(messageText, 'Alice');
+        document.querySelector('#Alice .last-message').textContent = "Vous: " + messageText;
+        messageInput.value = '';
+        simulateResponse(); 
+    }
+});
