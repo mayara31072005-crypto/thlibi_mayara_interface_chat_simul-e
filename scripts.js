@@ -7,6 +7,8 @@ const bobNotificationBadge = document.getElementById('bob-notification-badge');
 const localStorageKey = 'chatMessages_'; 
 let currentContactId = 'Bob';  
 const BOB_RESPONSE_INDEX_KEY = 'bobResponseIndex';
+const chatTitle = document.getElementById('chat-title');
+const currentChatAvatar = document.getElementById('current-chat-avatar');
 const contactData = {
     'Alice': { 
         name: 'Alice', 
@@ -131,4 +133,26 @@ messageForm.addEventListener('submit', function(event) {
         messageInput.value = '';
         simulateResponse(); 
     }
+});
+function switchContact(newContactId) {
+    currentContactId = newContactId; 
+    chatTitle.textContent = `Conversation avec ${contactData[currentContactId].name.split(' ')[0]}`;
+    currentChatAvatar.src = contactData[currentContactId].avatar;
+    contacts.forEach(c => c.classList.remove('active'));
+    document.getElementById(newContactId).classList.add('active');
+    if (newContactId === 'Bob') {
+        bobNotificationBadge.classList.add('hidden');
+    }
+    if (newContactId !== 'Bob') {
+        typingIndicator.classList.add('hidden');
+    } else {
+        bobLastMessageSpan.classList.remove('hidden');
+    }
+    loadMessages(currentContactId);
+}
+contacts.forEach(contact => {
+    contact.addEventListener('click', () => {
+        const contactId = contact.id;
+        switchContact(contactId);
+    });
 });
