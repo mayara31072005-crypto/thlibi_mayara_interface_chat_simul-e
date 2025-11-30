@@ -320,3 +320,40 @@ body {
     box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
     animation: pulse 1.5s infinite;
 }
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
+}
+.notification-badge {
+    position: absolute; 
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    background-color: #E74C3C; 
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 3px 6px;
+    min-width: 15px;
+    text-align: center;
+}
+.notification-badge.hidden {
+    display: none;
+}
+.contact-info {
+    position: relative; 
+}
+#chat-window.alice-theme #messages-container {
+    background-color: #f7f7f7;
+}
+#chat-window.bob-theme #messages-container {
+    background-color: #f3f9ff;
+}

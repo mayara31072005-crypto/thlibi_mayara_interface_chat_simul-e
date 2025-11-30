@@ -1,6 +1,7 @@
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
 const messagesContainer = document.getElementById('messages-container');
+const contacts = document.querySelectorAll('.contact');
 const typingIndicator = document.getElementById('typing-indicator');
 const bobLastMessageSpan = document.querySelector('#Bob .last-message');
 const bobNotificationBadge = document.getElementById('bob-notification-badge'); 
@@ -8,6 +9,7 @@ const localStorageKey = 'chatMessages_';
 let currentContactId = 'Bob';  
 const BOB_RESPONSE_INDEX_KEY = 'bobResponseIndex';
 const chatTitle = document.getElementById('chat-title');
+const chatWindow = document.getElementById('chat-window');
 const currentChatAvatar = document.getElementById('current-chat-avatar');
 const contactData = {
     'Alice': { 
@@ -30,19 +32,7 @@ const contactData = {
         ]
     }
 };
-function saveMessages() {
-    const key = localStorageKey + currentContactId;
-    const messages = [];
-    messagesContainer.querySelectorAll('.message').forEach(msgWrapperDiv => {
-        const sender = msgWrapperDiv.classList.contains('sent') ? 'Alice' : currentContactId;
-        const text = msgWrapperDiv.querySelector('.message-content').textContent;
-        messages.push({
-            text: text,
-            sender: sender 
-        });
-    });
-    localStorage.setItem(key, JSON.stringify(messages));
-}
+
 function saveMessages() {
     const key = localStorageKey + currentContactId;
     const messages = [];
@@ -156,3 +146,51 @@ contacts.forEach(contact => {
         switchContact(contactId);
     });
 });
+function initializeLastMessages() {
+    for (const id in contactData) {
+        if (contactData.hasOwnProperty(id)) {
+            const key = localStorageKey + id;
+            const savedMessages = localStorage.getItem(key);
+            if (savedMessages) {
+                const messages = JSON.parse(savedMessages);
+                if (messages.length > 0) {
+                    const lastMsg = messages[messages.length - 1];
+                    const contactSpan = document.querySelector(`#${id} .last-message`);
+                    
+                    if (contactSpan) {
+                        let textToDisplay = lastMsg.text;
+                        if (lastMsg.sender === 'Alice') {
+                            textToDisplay = "Vous: " + textToDisplay;
+                        }
+                        contactSpan.textContent = textToDisplay;
+                        contactSpan.classList.remove('hidden');
+                    }
+                }
+            }
+        }
+    }
+}
+initializeLastMessages();
+switchContact(currentContactId);
+function switchContact(newContactId) {
+    currentContactId = newContactId; 
+    chatTitle.textContent = `Conversation avec ${contactData[currentContactId].name.split(' ')[0]}`;
+    currentChatAvatar.src = contactData[currentContactId].avatar;
+    contacts.forEach(c => c.classList.remove('active'));
+    document.getElementById(newContactId).classList.add('active');
+    chatWindow.classList.remove('alice-theme', 'bob-theme');
+    if (newContactId === 'Alice') {
+        chatWindow.classList.add('alice-theme');
+    } else if (newContactId === 'Bob') {
+        chatWindow.classList.add('bob-theme');
+    }
+    if (newContactId === 'Bob') {
+        bobNotificationBadge.classList.add('hidden');
+    }
+    if (newContactId !== 'Bob') {
+        typingIndicator.classList.add('hidden');
+    } else {
+        bobLastMessageSpan.classList.remove('hidden');
+    }
+    loadMessages(currentContactId);
+}
