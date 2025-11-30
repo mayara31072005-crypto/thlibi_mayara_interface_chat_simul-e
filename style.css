@@ -257,6 +257,18 @@ body {
     }
     #chat-window header h1 {
         font-size: 1.2em;
+        height: 100%; 
+        min-height: 0;
+    }
+    #message-form {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100; 
+    }
+    #messages-container {
+        padding-bottom: 3000px;
     }
 }
 @media (max-width: 600px) {
