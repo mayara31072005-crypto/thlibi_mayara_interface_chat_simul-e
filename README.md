@@ -28,6 +28,7 @@ Chaque conversation est enregistrée dans le navigateur, même après rechargeme
 * **Effet d'animation** pour les nouveaux messages
 * **Interface responsive** (PC / tablette / mobile)
 ## 🌐 **4. Lien vers la page GitHub Pages (rendu final)**
+➡️ Cliquez sur le lien ci-dessus pour voir l’interface de chat en ligne.
  https://mayara31072005-crypto.github.io/thlibi_mayara_interface_chat_simul-e/
 ## 🚀 **5. Nouveautés explorées / Apprentissages**
 
@@ -55,4 +56,5 @@ Chaque conversation est enregistrée dans le navigateur, même après rechargeme
 * Mise en place d'un système d'**animations CSS** pour les nouveaux messages
 * Gestion du **typing indicator** avec un `setTimeout()` simulant la saisie
 * Amélioration de la lisibilité avec une **structure CSS organisée et des effets visuels**
+
 
